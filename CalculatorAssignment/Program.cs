@@ -9,7 +9,8 @@ namespace CalculatorAssignment
         {
             
             bool running = true;
-            int menu = 0;
+            double menu = 0;
+            double result = 0;
             
             WriteLine("Welcome!");
 
@@ -34,22 +35,22 @@ namespace CalculatorAssignment
                         }
                         break;
                     case 1:
-                        Add();
+                        result = Add(result);
                         break;
                     case 2:
-                        Subtract();
+                        result = Subtract(result);
                         break;
                     case 3:
-                        Division();
+                        result = Division(result);
                         break;
                     case 4:
-                        Multiply();
+                        result = Multiply(result);
                         break;
                     case 5:
-                        PowerOf();
+                        result = PowerOf(result);
                         break;
                     case 6:
-                        SquareRoot();
+                        result = SquareRoot(result);
                         break;
                     default:
                         ErrorMsg();
@@ -57,6 +58,8 @@ namespace CalculatorAssignment
 
                 }
 
+                WriteLine("\nThe result is {0}", result);
+                
             }
         }
 
@@ -82,112 +85,106 @@ namespace CalculatorAssignment
                 WriteLine("#{0}  {1}", i, menuOpts[i]);
             }
 
-
         }
 
         // Takes input from user and runs until a valid number is entered
-        static int GetNumberFromUser()
+        static double GetNumberFromUser()
         {
-            int userInput = 0;
+            double userInput = 0;
             bool success = false;
             while (!success)
             {
                 WriteLine("\nEnter number:");
-                success = int.TryParse(ReadLine(), out userInput);
+                success = double.TryParse(ReadLine(), out userInput);
             }
 
             return userInput;
         }
 
         //Ask user for any amount of numbers and add them together
-        static double Add ()
+        static double Add (double result)
         {
-            bool SumUp = false;
-            double num, sum = 0D;
+            bool countResult = false;
             EnterNumMsg();
-            WriteLine("Type 'exit' to calculate.");
+            WriteLine("Type 'quit' to add everything together.");
             
-            while (!SumUp)
+            while (!countResult)
             {
-                string text = ReadLine();
-                if (text.ToLower() == "exit")
+                string userInput = ReadLine();
+                if (userInput.ToLower() == "quit")
                 {
-                    SumUp = true;
+                    countResult = true;
                 }
-                else if (double.TryParse(text, out num))
+                else if (double.TryParse(userInput, out double addNum))
                 {
-                    sum += num;
+                    result += addNum;
                 } else
                 {
                     ErrorMsg();
                 }
             }
 
-            WriteLine("Your sum is {0}", sum);
-
-            return 0;
+            return result;
         }
 
-        static int Subtract ()
+        static double Subtract (double result)
         {
             EnterNumMsg();
-            int firstNum = GetNumberFromUser();
-            int secondNum = GetNumberFromUser();
-            int sum = firstNum - secondNum;
+            double firstNum = GetNumberFromUser();
+            double secondNum = GetNumberFromUser();
+            
+            result = firstNum - secondNum;
 
-            WriteLine("Your sum is {0}", sum);
-            return sum;
+            return result;
         }
 
-        static double Division()
+        static double Division(double result)
         {
             EnterNumMsg();
-            int firstNum = GetNumberFromUser();
-            int divisionNum = GetNumberFromUser();
+            double firstNum = GetNumberFromUser();
+            double divisionNum = GetNumberFromUser();
 
             while (divisionNum == 0)
             {
-                WriteLine("Can't divide by 0.");
+                WriteLine("Can't divide by 0, enter another number.");
                 divisionNum = GetNumberFromUser();
             }
 
-            WriteLine("Your sum is {0}", (double) firstNum / divisionNum);
-            return 0;
+            result = (double)firstNum/divisionNum;
+
+            return result;
         }
 
-        static int Multiply()
+        static double Multiply(double result)
         {
             EnterNumMsg();
-            int firstNum = GetNumberFromUser();
-            int secondNum = GetNumberFromUser();
+            double firstNum = GetNumberFromUser();
+            double secondNum = GetNumberFromUser();
             
-            int sum = firstNum * secondNum;
+            result = firstNum * secondNum;
             
-            WriteLine("Your sum is {0}", sum);
-            return sum;
+            return result;
         }
 
-        static double PowerOf()
+        static double PowerOf(double result)
         {
             EnterNumMsg();
-            int firstNum = GetNumberFromUser();
-            int secondNum = GetNumberFromUser();
+            double firstNum = GetNumberFromUser();
+            double secondNum = GetNumberFromUser();
 
-            double sum = Math.Pow(firstNum, secondNum);
+            result = Math.Pow(firstNum, secondNum);
 
-            WriteLine("Your sum is {0}", sum);
-            return sum;
+            return result;
         }
 
-        static double SquareRoot()
+        static double SquareRoot(double result)
         {
             EnterNumMsg();
             double firstNum = GetNumberFromUser();
 
-            double sum = Math.Sqrt(firstNum);
+            result = Math.Sqrt(firstNum);
 
-            WriteLine("Square root is {0}", sum);
-            return sum;
+            return result;
         }
 
     }
