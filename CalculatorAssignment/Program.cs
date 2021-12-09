@@ -101,31 +101,17 @@ namespace CalculatorAssignment
             return userInput;
         }
 
-        //Ask user for any amount of numbers and add them together
         static double Add (double result)
         {
-            bool countResult = false;
             EnterNumMsg();
-            WriteLine("Type 'quit' to add everything together.");
-            
-            while (!countResult)
-            {
-                string userInput = ReadLine();
-                if (userInput.ToLower() == "quit")
-                {
-                    countResult = true;
-                }
-                else if (double.TryParse(userInput, out double addNum))
-                {
-                    result += addNum;
-                } else
-                {
-                    ErrorMsg();
-                }
-            }
+            double firstNum = GetNumberFromUser();
+            double secondNum = GetNumberFromUser();
+
+            result = firstNum + secondNum;
 
             return result;
         }
+
 
         static double Subtract (double result)
         {
