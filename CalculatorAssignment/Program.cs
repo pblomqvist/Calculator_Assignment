@@ -3,7 +3,7 @@ using static System.Console;
 
 namespace CalculatorAssignment
 {
-    class Program
+    public class Program
     {
         static void Main(string[] args)
         {
@@ -11,6 +11,9 @@ namespace CalculatorAssignment
             bool running = true;
             double menu = 0;
             double result = 0;
+            double num1 = 0;
+            double num2 = 0;
+            string input = "";
             
             WriteLine("Welcome!");
 
@@ -35,25 +38,41 @@ namespace CalculatorAssignment
                         }
                         break;
                     case 1:
-                        result = Add(result);
+                        EnterNumMsg();
+                        input = ReadLine();
+                        Add2(input);
                         break;
                     case 2:
-                        result = Subtract(result);
+                        EnterNumMsg();
+                        num1 = GetNumberFromUser();
+                        num2 = GetNumberFromUser();
+                        result = Subtract(num1, num2);
                         break;
                     case 3:
-                        result = Division(result);
+                        EnterNumMsg();
+                        num1 = GetNumberFromUser();
+                        num2 = GetNumberFromUser();
+                        result = Division(num1, num2);
                         break;
                     case 4:
-                        result = Multiply(result);
+                        EnterNumMsg();
+                        num1 = GetNumberFromUser();
+                        num2 = GetNumberFromUser();
+                        result = Multiply(num1, num2);
                         break;
                     case 5:
-                        result = PowerOf(result);
+                        EnterNumMsg();
+                        num1 = GetNumberFromUser();
+                        num2 = GetNumberFromUser();
+                        result = PowerOf(num1, num2);
                         break;
                     case 6:
-                        result = SquareRoot(result);
+                        EnterNumMsg();
+                        num1 = GetNumberFromUser();
+                        result = SquareRoot(num1);
                         break;
                     default:
-                        ErrorMsg();
+                        WriteLine("Something went wrong, try again.");
                         break;
 
                 }
@@ -92,83 +111,128 @@ namespace CalculatorAssignment
         {
             double userInput = 0;
             bool success = false;
-            while (!success)
+
+            do
             {
-                WriteLine("\nEnter number:");
-                success = double.TryParse(ReadLine(), out userInput);
-            }
+                try
+                {
+                    WriteLine("\nEnter number:");
+                    success = double.TryParse(ReadLine(), out userInput);
+                } catch(OverflowException)
+                {
+                    WriteLine("Your value is too big");
+                }
+                catch (ArgumentNullException)
+                {
+                    WriteLine("Could not parse, value was null");
+                }
+                catch (FormatException error)
+                {
+                    WriteLine(error.Message);
+
+                    WriteLine("Wrong format");
+                }
+
+            } while (!success);
 
             return userInput;
         }
 
-        static double Add (double result)
+        public static double Add2(string input)
         {
-            EnterNumMsg();
-            double firstNum = GetNumberFromUser();
-            double secondNum = GetNumberFromUser();
 
-            result = firstNum + secondNum;
+            string splitInput = input.Replace(",", " ");
+            WriteLine(splitInput);
+            //double[] arr = new double[] { num1, num2 };
+            double result = 0;
+
+            //for (int i = 0; i < arr.Length; i++)
+            //{
+            //    result += arr[i];
+            //}
+
+            //WriteLine("result is " + result);
+
+            return result;
+        }
+
+        public static double Add(double num1, double num2)
+        {
+            double result = 0;
+            result = num1 + num2;
+
+            return result;
+        }
+
+        public static double Subtract(double num1, double num2)
+        {
+            double result = 0;
+            result = num1 - num2;
 
             return result;
         }
 
 
-        static double Subtract (double result)
+        public static double Division(double num1, double num2)
         {
-            EnterNumMsg();
-            double firstNum = GetNumberFromUser();
-            double secondNum = GetNumberFromUser();
-            
-            result = firstNum - secondNum;
+            double result = 0;
+            bool success = false;
 
-            return result;
-        }
+            //do
+            //{
+            //    try
+            //    {
+            //        if (num2 == 0)
+            //        {
+            //            throw new DivideByZeroException("Can't divide by 0, enter another number.");
 
-        static double Division(double result)
-        {
-            EnterNumMsg();
-            double firstNum = GetNumberFromUser();
-            double divisionNum = GetNumberFromUser();
+            //        }
+            //        else
+            //        {
+            //            result = num1 / num2;
+            //            success = true;
+            //        }
 
-            while (divisionNum == 0)
+            //    }
+            //    catch (DivideByZeroException)
+            //    {
+            //        WriteLine("Can't divide by 0, enter another number.");
+            //        success = false;
+            //        num2 = GetNumberFromUser();
+            //    }
+
+            //}
+            //while (!success);
+
+            if (num2 == 0)
             {
-                WriteLine("Can't divide by 0, enter another number.");
-                divisionNum = GetNumberFromUser();
+                throw new DivideByZeroException("Can't divide by 0, enter another number.");
             }
 
-            result = (double)firstNum/divisionNum;
-
+            result = num1 / num2;
             return result;
         }
 
-        static double Multiply(double result)
+        public static double Multiply(double num1, double num2)
         {
-            EnterNumMsg();
-            double firstNum = GetNumberFromUser();
-            double secondNum = GetNumberFromUser();
-            
-            result = firstNum * secondNum;
+            double result = 0;
+            result = num1 * num2;
             
             return result;
         }
 
-        static double PowerOf(double result)
+        public static double PowerOf(double num1, double num2)
         {
-            EnterNumMsg();
-            double firstNum = GetNumberFromUser();
-            double secondNum = GetNumberFromUser();
-
-            result = Math.Pow(firstNum, secondNum);
+            double result = 0;
+            result = Math.Pow(num1, num2);
 
             return result;
         }
 
-        static double SquareRoot(double result)
+        public static double SquareRoot(double num1)
         {
-            EnterNumMsg();
-            double firstNum = GetNumberFromUser();
-
-            result = Math.Sqrt(firstNum);
+            double result = 0;
+            result = Math.Sqrt(num1);
 
             return result;
         }
