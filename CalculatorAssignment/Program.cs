@@ -9,6 +9,7 @@ namespace CalculatorAssignment
         {
             
             bool running = true;
+            bool success = false;
             double menu = 0;
             double result = 0;
             double num1 = 0;
@@ -39,7 +40,7 @@ namespace CalculatorAssignment
                         break;
                     case 1:
                         EnterNumMsg();
-                        input = ReadLine();
+                        input = (ReadLine());
                         Add2(input);
                         break;
                     case 2:
@@ -52,7 +53,32 @@ namespace CalculatorAssignment
                         EnterNumMsg();
                         num1 = GetNumberFromUser();
                         num2 = GetNumberFromUser();
-                        result = Division(num1, num2);
+                        do
+                        {
+                            try
+                            {
+                                if (num2 == 0)
+                                {
+                                    throw new DivideByZeroException("Can't divide by 0, enter another number.");
+
+                                }
+                                else
+                                {
+                                    result = Division(num1, num2);
+                                    success = true;
+                                }
+
+                            }
+                            catch (DivideByZeroException)
+                            {
+                                WriteLine("Can't divide by 0, enter another number.");
+                                success = false;
+                                num2 = GetNumberFromUser();
+                            }
+
+                        }
+                        while (!success);
+                        
                         break;
                     case 4:
                         EnterNumMsg();
@@ -140,18 +166,16 @@ namespace CalculatorAssignment
 
         public static double Add2(string input)
         {
-
-            string splitInput = input.Replace(",", " ");
-            WriteLine(splitInput);
-            //double[] arr = new double[] { num1, num2 };
+            double num1 = double.Parse(input);
+            double[] arr = new double[] { num1 };
             double result = 0;
 
-            //for (int i = 0; i < arr.Length; i++)
-            //{
-            //    result += arr[i];
-            //}
+            for (int i = 0; i < arr.Length; i++)
+            {
+                result += arr[i];
+            }
 
-            //WriteLine("result is " + result);
+            WriteLine("result is " + result);
 
             return result;
         }
@@ -176,33 +200,6 @@ namespace CalculatorAssignment
         public static double Division(double num1, double num2)
         {
             double result = 0;
-            bool success = false;
-
-            //do
-            //{
-            //    try
-            //    {
-            //        if (num2 == 0)
-            //        {
-            //            throw new DivideByZeroException("Can't divide by 0, enter another number.");
-
-            //        }
-            //        else
-            //        {
-            //            result = num1 / num2;
-            //            success = true;
-            //        }
-
-            //    }
-            //    catch (DivideByZeroException)
-            //    {
-            //        WriteLine("Can't divide by 0, enter another number.");
-            //        success = false;
-            //        num2 = GetNumberFromUser();
-            //    }
-
-            //}
-            //while (!success);
 
             if (num2 == 0)
             {

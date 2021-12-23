@@ -47,7 +47,7 @@ namespace calculator_test
         }
 
         [Fact]
-        public void DivisionTest()
+        public void DivideByZeroTest()
         {
 
             double num1 = 5;
