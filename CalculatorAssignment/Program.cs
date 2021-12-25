@@ -1,5 +1,6 @@
 ﻿using System;
 using static System.Console;
+using Operations;
 
 namespace CalculatorAssignment
 {
@@ -14,8 +15,10 @@ namespace CalculatorAssignment
             double result = 0;
             double num1 = 0;
             double num2 = 0;
-            string input = "";
-            
+            double[] userInput = new double[15];
+            OverloadAddSub addNum = new OverloadAddSub();
+
+
             WriteLine("Welcome!");
 
             while (running)
@@ -39,17 +42,37 @@ namespace CalculatorAssignment
                         }
                         break;
                     case 1:
-                        EnterNumMsg();
-                        input = (ReadLine());
-                        Add2(input);
-                        break;
-                    case 2:
-                        EnterNumMsg();
+                        WriteLine("\nGive me 2 numbers to add!");
                         num1 = GetNumberFromUser();
                         num2 = GetNumberFromUser();
-                        result = Subtract(num1, num2);
+                        result = addNum.Add(num1, num2);
+                        break;
+                    case 2:
+                        WriteLine("Give me multiple numbers to add! \nFinish by entering '='");
+
+                        PutNumsInArray(userInput);
+
+                        WriteLine("[{0}]", string.Join(", ", userInput));
+                        result = addNum.Add(userInput);
+
                         break;
                     case 3:
+                        WriteLine("\nGive me 2 numbers to subtract!");
+                        num1 = GetNumberFromUser();
+                        num2 = GetNumberFromUser();
+                        result = addNum.Sub(num1, num2);
+
+                        break;
+                    case 4:
+                        WriteLine("Give me multiple numbers to subtract! \nFinish by entering '='");
+
+                        PutNumsInArray(userInput);
+
+                        WriteLine("[{0}]", string.Join(", ", userInput));
+                        result = addNum.Sub(userInput);
+
+                        break;
+                    case 5:
                         EnterNumMsg();
                         num1 = GetNumberFromUser();
                         num2 = GetNumberFromUser();
@@ -80,19 +103,19 @@ namespace CalculatorAssignment
                         while (!success);
                         
                         break;
-                    case 4:
+                    case 6:
                         EnterNumMsg();
                         num1 = GetNumberFromUser();
                         num2 = GetNumberFromUser();
                         result = Multiply(num1, num2);
                         break;
-                    case 5:
+                    case 7:
                         EnterNumMsg();
                         num1 = GetNumberFromUser();
                         num2 = GetNumberFromUser();
                         result = PowerOf(num1, num2);
                         break;
-                    case 6:
+                    case 8:
                         EnterNumMsg();
                         num1 = GetNumberFromUser();
                         result = SquareRoot(num1);
@@ -123,7 +146,8 @@ namespace CalculatorAssignment
         {
 
             WriteLine("\nChoose an option..");
-            string[] menuOpts = { "Exit", "Add", "Subtract", "Division", "Multiply", "Power of", "Square root" };
+            string[] menuOpts = { "Exit", "Add 2 numbers", "Add multiple", "Subtract 2 numbers", 
+                                    "Subtract multiple", "Division", "Multiply", "Power of", "Square root" };
 
             for (int i = 0; i < menuOpts.Length; i++)
             {
@@ -164,20 +188,29 @@ namespace CalculatorAssignment
             return userInput;
         }
 
-        public static double Add2(string input)
+        public static void PutNumsInArray(double[] userInput)
         {
-            double num1 = double.Parse(input);
-            double[] arr = new double[] { num1 };
-            double result = 0;
-
-            for (int i = 0; i < arr.Length; i++)
+            bool countResult = false;
+            while (!countResult)
             {
-                result += arr[i];
-            }
+                int counter = 0;
 
-            WriteLine("result is " + result);
+                for (counter = 0; counter < userInput.Length; counter++)
+                {
+                string addInput = ReadLine();
+                    if (addInput.Equals("="))
+                    {
+                        countResult = true;
+                        break;
+                    }
+                    else
+                    {
+                        double.TryParse(addInput, out userInput[counter]);
+                    }
 
-            return result;
+                }
+
+           }
         }
 
         public static double Add(double num1, double num2)
