@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Operations
 {
-    class OverloadAddSub
+    public class OverloadAddSub
     {
         public double Add(double num1, double num2)
         {

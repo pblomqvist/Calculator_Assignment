@@ -1,11 +1,15 @@
 using System;
 using Xunit;
 using CalculatorAssignment;
+using Operations;
 
 namespace calculator_test
 {
     public class UnitTest1
     {
+
+        OverloadAddSub overloaded = new OverloadAddSub();
+
         [Fact]
         public void AddTest()
         {
@@ -14,7 +18,7 @@ namespace calculator_test
             double num2 = 4;
             double expectedResult = 9;
 
-            double result = Program.Add(num1, num2);
+            double result = overloaded.Add(num1, num2);
 
             Assert.Equal(expectedResult, result);
         }
@@ -28,7 +32,7 @@ namespace calculator_test
             double num2 = 5;
             double expectedResult = 0;
 
-            double result = Program.Subtract(num1, num2);
+            double result = overloaded.Sub(num1, num2);
 
             Assert.Equal(expectedResult, result);
         }
@@ -64,6 +68,32 @@ namespace calculator_test
         {
             double result = Program.Division(num1, num2);
             Assert.Equal(expected, result, 4);
+        }
+
+        [Fact]
+        public void AddArrayTest()
+        {
+            
+            double expected = 13;
+            double[] numInputs = new double[] { 2, 5, 6 };
+            
+
+            double result = addNum.Add(numInputs);
+            Assert.Equal(expected, result);
+
+        }
+
+        [Fact]
+        public void SubArrayTest()
+        {
+
+            double expected = -13;
+            double[] numInputs = new double[] { 2, 5, 6 };
+            OverloadAddSub addNum = new OverloadAddSub();
+
+            double result = addNum.Sub(numInputs);
+            Assert.Equal(expected, result);
+
         }
 
         [Fact]

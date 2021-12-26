@@ -15,8 +15,8 @@ namespace CalculatorAssignment
             double result = 0;
             double num1 = 0;
             double num2 = 0;
-            double[] userInput = new double[15];
-            OverloadAddSub addNum = new OverloadAddSub();
+            double[] arrayNumInput = new double[100];
+            OverloadAddSub overloaded = new OverloadAddSub();
 
 
             WriteLine("Welcome!");
@@ -45,31 +45,30 @@ namespace CalculatorAssignment
                         WriteLine("\nGive me 2 numbers to add!");
                         num1 = GetNumberFromUser();
                         num2 = GetNumberFromUser();
-                        result = addNum.Add(num1, num2);
+                        result = overloaded.Add(num1, num2);
                         break;
                     case 2:
-                        WriteLine("Give me multiple numbers to add! \nFinish by entering '='");
+                        WriteLine("Give me multiple numbers to subtract! \nFinish by entering '='");
 
-                        PutNumsInArray(userInput);
+                        PutNumsInArray(arrayNumInput);
 
-                        WriteLine("[{0}]", string.Join(", ", userInput));
-                        result = addNum.Add(userInput);
-
+                        WriteLine("[{0}]", string.Join(", ", arrayNumInput));
+                        result = overloaded.Add(arrayNumInput);
                         break;
                     case 3:
                         WriteLine("\nGive me 2 numbers to subtract!");
                         num1 = GetNumberFromUser();
                         num2 = GetNumberFromUser();
-                        result = addNum.Sub(num1, num2);
+                        result = overloaded.Sub(num1, num2);
 
                         break;
                     case 4:
                         WriteLine("Give me multiple numbers to subtract! \nFinish by entering '='");
 
-                        PutNumsInArray(userInput);
+                        PutNumsInArray(arrayNumInput);
 
-                        WriteLine("[{0}]", string.Join(", ", userInput));
-                        result = addNum.Sub(userInput);
+                        WriteLine("[{0}]", string.Join(", ", arrayNumInput));
+                        result = overloaded.Sub(arrayNumInput);
 
                         break;
                     case 5:
@@ -188,16 +187,22 @@ namespace CalculatorAssignment
             return userInput;
         }
 
-        public static void PutNumsInArray(double[] userInput)
+        // Takes user input and puts in array to add or subtract the values
+        // Known faults with method:
+        // * Accepts wrong input format but skips putting something in the array. Doesn't break program
+        // * Subtract array does not count first value as positive and thus result always becomes negative
+
+        public static void PutNumsInArray(double[] arrayNumInput)
         {
+
             bool countResult = false;
             while (!countResult)
             {
                 int counter = 0;
 
-                for (counter = 0; counter < userInput.Length; counter++)
+                for (counter = 0; counter < arrayNumInput.Length; counter++)
                 {
-                string addInput = ReadLine();
+                    string addInput = ReadLine();
                     if (addInput.Equals("="))
                     {
                         countResult = true;
@@ -205,28 +210,12 @@ namespace CalculatorAssignment
                     }
                     else
                     {
-                        double.TryParse(addInput, out userInput[counter]);
+                        double.TryParse(addInput, out arrayNumInput[counter]);
                     }
 
                 }
 
-           }
-        }
-
-        public static double Add(double num1, double num2)
-        {
-            double result = 0;
-            result = num1 + num2;
-
-            return result;
-        }
-
-        public static double Subtract(double num1, double num2)
-        {
-            double result = 0;
-            result = num1 - num2;
-
-            return result;
+            }
         }
 
 
